@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard | Expense Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">ExpenseTracker</a>
+    <div>
+      <button type="button" class="btn btn-outline-info me-2" data-bs-toggle="modal" data-bs-target="#chatModal">AI Chat</button>
+      <a class="btn btn-outline-light me-2" href="/add-expense">Add Expense</a>
+      <a class="btn btn-danger" href="/logout">Logout</a>
+    </div>
+  </div>
+</nav>
+
+<section class="container py-5">
+  <div class="row gy-4 mb-5">
+    <div class="col-lg-8">
+      <div class="card metric-card p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div>
+            <h1 class="mb-2">Hello, <%= currentUser ? currentUser.name : "Friend" %></h1>
+            <p class="text-muted">Your spending insights and AI-powered suggestions are ready.</p>
+          </div>
+          <div class="text-end">
+            <p class="text-muted mb-1">Total Spent</p>
+            <div class="metric-value">₹<%= total.toFixed(2) %></div>
+          </div>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="card feature-card p-3 h-100">
+              <p class="text-muted mb-2">Top category</p>
+              <h4><%= topCategory %></h4>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card feature-card p-3 h-100">
+              <p class="text-muted mb-2">Expense entries</p>
+              <h4><%= expenses.length %></h4>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card feature-card p-3 h-100">
+              <p class="text-muted mb-2">AI advice</p>
+              <h4>Personalized</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card chart-card shadow-sm p-4 h-100">
+        <h5 class="mb-4">Spending Snapshot</h5>
+        <canvas id="categoryChart" height="260"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-5">
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-4 h-100">
+        <h5 class="mb-3">Spending by Category</h5>
+        <canvas id="categoryChartBar" height="260"></canvas>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card shadow-sm p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="mb-0">AI Insights</h5>
+          <span class="badge bg-success text-white">Powered by AI</span>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% aiInsights.forEach((insight) => { %>
+            <li class="list-group-item border-0 py-3 px-0"><%= insight %></li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mb-5">
+    <div class="col-lg-12">
+      <div class="card shadow-sm p-4 h-100">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <h5 class="mb-0">AI Suggestions</h5>
+          <span class="badge bg-info text-dark">Smart tips</span>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% suggestions.forEach((suggestion) => { %>
+            <li class="list-group-item border-0 py-3 px-0"><%= suggestion %></li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm p-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <div>
+        <h5>Recent Expenses</h5>
+        <p class="mb-0 text-muted">Top spending categories show what costs you the most.</p>
+      </div>
+      <a href="/add-expense" class="btn btn-primary">Add New Expense</a>
+    </div>
+
+    <% if (expenses.length === 0) { %>
+      <div class="alert alert-info">No expenses added yet. Add your first expense to start analyzing your spending.</div>
+    <% } else { %>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Item</th>
+              <th>Category</th>
+              <th class="text-end">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% expenses.slice(0, 10).forEach((expense) => { %>
+              <tr>
+                <td><%= expense.date.toDateString() %></td>
+                <td><%= expense.title %></td>
+                <td><%= expense.category %></td>
+                <td class="text-end">₹<%= expense.amount.toFixed(2) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </div>
+</section>
+
+<!-- AI Chatbot Modal -->
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatModalLabel">AI Expense Assistant</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="chatMessages" class="mb-3" style="height: 300px; overflow-y: auto; border: 1px solid #dee2e6; padding: 10px; border-radius: 5px;">
+          <p class="text-muted">Hello! I'm your AI expense assistant. Ask me anything about your spending!</p>
+        </div>
+        <div class="input-group">
+          <input type="text" id="chatInput" class="form-control" placeholder="e.g., How much did I spend on food this month?" />
+          <button id="sendChat" class="btn btn-primary">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  const labels = <%- JSON.stringify(chartLabels) %>;
+  const amounts = <%- JSON.stringify(chartData) %>;
+
+  new Chart(document.getElementById("categoryChart"), {
+    type: "doughnut",
+    data: {
+      labels,
+      datasets: [{
+        label: "Spent",
+        data: amounts,
+        backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b", "#858796"],
+        borderColor: "#fff",
+        borderWidth: 2
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  });
+
+  new Chart(document.getElementById("categoryChartBar"), {
+    type: "bar",
+    data: {
+      labels,
+      datasets: [{
+        label: "Amount Spent",
+        data: amounts,
+        backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b", "#858796"],
+        borderColor: "#fff",
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+  // AI Chatbot functionality
+  document.getElementById('sendChat').addEventListener('click', sendChatMessage);
+  document.getElementById('chatInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      sendChatMessage();
+    }
+  });
+
+  async function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const messages = document.getElementById('chatMessages');
+    const query = input.value.trim();
+    
+    if (!query) return;
+    
+    // Add user message
+    messages.innerHTML += `<div class="mb-2"><strong>You:</strong> ${query}</div>`;
+    input.value = '';
+    
+    // Add typing indicator
+    const typingDiv = document.createElement('div');
+    typingDiv.innerHTML = '<em>AI is thinking...</em>';
+    messages.appendChild(typingDiv);
+    messages.scrollTop = messages.scrollHeight;
+    
+    try {
+      const response = await fetch('/ai/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+      const data = await response.json();
+      
+      // Remove typing indicator
+      messages.removeChild(typingDiv);
+      
+      // Add AI response
+      messages.innerHTML += `<div class="mb-2"><strong>AI:</strong> ${data.response}</div>`;
+    } catch (error) {
+      messages.removeChild(typingDiv);
+      messages.innerHTML += `<div class="mb-2 text-danger"><strong>AI:</strong> Sorry, I couldn't process your request.</div>`;
+    }
+    
+    messages.scrollTop = messages.scrollHeight;
+  }
+</script>
+
+</body>
+</html>

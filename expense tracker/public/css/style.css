@@ -1,0 +1,321 @@
+:root {
+  color-scheme: light;
+  --bg: #f2f5fb;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: #ffffff;
+  --surface-soft: rgba(255, 255, 255, 0.72);
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+  --primary-strong: #3730a3;
+  --accent: #0ea5e9;
+  --border: rgba(15, 23, 42, 0.08);
+  --shadow: 0 30px 75px rgba(15, 23, 42, 0.08);
+}
+
+:root {
+  color-scheme: light;
+  --bg: #e9eff9;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: rgba(255, 255, 255, 1);
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+  --primary-strong: #3730a3;
+  --accent: #0ea5e9;
+  --border: rgba(15, 23, 42, 0.08);
+  --shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.14), transparent 20%),
+              radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.12), transparent 20%),
+              var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle at 15% 10%, rgba(79, 70, 229, 0.15), transparent 18%),
+                    radial-gradient(circle at 85% 90%, rgba(14, 165, 233, 0.14), transparent 22%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.navbar {
+  background: rgba(15, 23, 42, 0.92) !important;
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-brand {
+  letter-spacing: 0.12em;
+  font-size: 1.15rem;
+  text-transform: uppercase;
+}
+
+.navbar .btn {
+  border-radius: 999px;
+}
+
+.hero {
+  min-height: 72vh;
+  position: relative;
+  background-image: linear-gradient(135deg, rgba(15, 23, 42, 0.82), rgba(79, 70, 229, 0.7)),
+                    url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.25), rgba(15, 23, 42, 0.4));
+}
+
+.hero .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.hero p {
+  max-width: 720px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hero .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  justify-content: flex-start;
+}
+
+.hero .hero-actions .btn {
+  min-width: 170px;
+}
+
+.hero .hero-card {
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 32px 80px rgba(15, 23, 42, 0.18);
+}
+
+.hero .hero-card h5,
+.hero .hero-card p {
+  color: white;
+}
+
+.feature-card,
+.metric-card,
+.chart-card,
+.auth-form,
+.form-panel,
+.auth-panel {
+  border-radius: 28px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: var(--shadow);
+}
+
+.feature-card {
+  padding: 2rem;
+  min-height: 220px;
+}
+
+.feature-card h5 {
+  font-weight: 700;
+}
+
+.metric-card {
+  padding: 2rem;
+}
+
+.metric-card .metric-value {
+  font-size: 2.35rem;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 18px 45px rgba(79, 70, 229, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-strong);
+  border-color: var(--primary-strong);
+}
+
+.btn-light {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.card,
+.table-responsive,
+.form-control,
+input,
+textarea,
+select {
+  border-radius: 20px !important;
+}
+
+.form-control:focus,
+textarea:focus,
+select:focus {
+  border-color: rgba(79, 70, 229, 0.5) !important;
+  box-shadow: 0 0 0 0.2rem rgba(79, 70, 229, 0.12);
+}
+
+.auth-shell {
+  min-height: 100vh;
+  padding: 4rem 0;
+}
+
+.auth-panel {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 2rem;
+  align-items: center;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.auth-panel .panel-image {
+  min-height: 520px;
+  background-image: linear-gradient(180deg, rgba(79,70,229,0.94), rgba(14,165,233,0.76)), url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80');
+  background-size: cover;
+  background-position: center;
+  border-radius: 34px;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-panel .panel-image::after {
+  content: 'Secure, smart and perfectly designed for your spending.';
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.95);
+}
+
+.auth-form {
+  padding: 3rem;
+}
+
+.auth-form h3 {
+  font-weight: 800;
+}
+
+.auth-form .form-label {
+  font-weight: 600;
+}
+
+.auth-form .small {
+  color: var(--muted);
+}
+
+.footer-compact {
+  padding: 1.8rem 0;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(79, 70, 229, 0.08);
+}
+
+.table thead th {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+footer {
+  background: transparent;
+}
+
+.admin-panel {
+  min-height: 100vh;
+  padding: 4rem 0;
+}
+
+.admin-hero {
+  background: linear-gradient(135deg, rgba(79,70,229,0.95), rgba(14,165,233,0.92));
+  color: #fff;
+  border-radius: 32px;
+  padding: 3rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.10), transparent 40%);
+}
+
+.admin-hero .hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.admin-hero h2,
+.admin-hero p {
+  color: white;
+}
+
+.admin-card {
+  min-height: 220px;
+}
+
+.admin-card h5 {
+  font-weight: 700;
+}
+
+@media (max-width: 991px) {
+  .auth-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding-bottom: 2rem;
+  }
+
+  .auth-panel {
+    gap: 1.5rem;
+  }
+}

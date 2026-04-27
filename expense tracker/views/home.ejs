@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="/">ExpenseTracker</a>
+    <div>
+      <% if (user) { %>
+        <a class="btn btn-outline-light me-2" href="/dashboard">Dashboard</a>
+        <a class="btn btn-danger" href="/logout">Logout</a>
+      <% } else { %>
+        <a class="btn btn-outline-light me-2" href="/login">Login</a>
+        <a class="btn btn-primary" href="/signup">Signup</a>
+      <% } %>
+    </div>
+  </div>
+</nav>
+
+<section class="hero d-flex align-items-center">
+  <div class="container">
+    <div class="row justify-content-center gy-4">
+      <div class="col-lg-8 text-center">
+        <h1 class="display-4 fw-bold">Make every rupee work harder with elegant expense tracking.</h1>
+        <p class="lead mt-4 mx-auto">Track spending, explore visual trends, and receive intelligent advice in a premium, modern interface.</p>
+        <div class="hero-actions mt-4 d-flex flex-wrap align-items-center gap-3 justify-content-center">
+          <% if (user) { %>
+            <a href="/dashboard" class="btn btn-primary btn-lg">View Dashboard</a>
+            <a href="/add-expense" class="btn btn-light btn-lg">Add Expense</a>
+          <% } else { %>
+            <a href="/signup" class="btn btn-primary btn-lg">Get Started</a>
+            <a href="/login" class="btn btn-light btn-lg">Login</a>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container py-5">
+  <div class="row gy-4">
+    <div class="col-md-4">
+      <div class="feature-card shadow-sm h-100">
+        <div class="mb-3"><span class="badge bg-primary">TRACK</span></div>
+        <h5 class="mb-3">Track expenses</h5>
+        <p class="text-muted">Log purchases instantly and keep every transaction under control.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card shadow-sm h-100">
+        <div class="mb-3"><span class="badge bg-info text-dark">VISUALIZE</span></div>
+        <h5 class="mb-3">Visualize spending</h5>
+        <p class="text-muted">Clear charts expose where your money goes so you can plan better.</p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="feature-card shadow-sm h-100">
+        <div class="mb-3"><span class="badge bg-success">ADVISE</span></div>
+        <h5 class="mb-3">Get smarter advice</h5>
+        <p class="text-muted">AI-backed tips help you reduce costs and boost savings.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-compact text-center py-5">
+  <p class="mb-0 text-muted">© 2026 ExpenseTracker — premium budgeting for modern spenders.</p>
+</footer>
+
+</body>
+</html>
