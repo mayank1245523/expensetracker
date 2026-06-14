@@ -11,4 +11,4 @@ def helo(ar):
   print(f"{ar}")
 ```
 
-![expectation](expensetracker/Screenshot 2026-06-06 223928.png)
+![expectation](image.png)
